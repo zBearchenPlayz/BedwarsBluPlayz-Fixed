@@ -1518,7 +1518,7 @@ class RefreshSigns extends PluginTask {
             if ($t instanceof Sign) {
                 $text = $t->getText();
                 if ($text[0] == $this->prefix) {
-                        aop = count($this->plugin->getServer()->getLevelByName($text[1])->getPlayers());
+                        count($this->plugin->getServer()->getLevelByName($text[1])->getPlayers());
                     			$ingame = TextFormat::GREEN . "Beitreten";
                     			$config = new Config($this->plugin->getDataFolder() . "config.yml", Config::YAML);
                     			if ($config->get($text[1] . "Status") != "Lobby") {
