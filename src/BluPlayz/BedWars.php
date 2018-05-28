@@ -164,8 +164,8 @@ class Bedwars extends PluginBase implements Listener {
         }
 
 
-        $this->getServer()->getScheduler()->scheduleRepeatingTask(new BWRefreshSigns($this), 10);
-        $this->getServer()->getScheduler()->scheduleRepeatingTask(new BWGameSender($this), 20);
+        $this->getServer()->getScheduler()->scheduleRepeatingTask(new RefreshSigns($this), 10);
+        $this->getServer()->getScheduler()->scheduleRepeatingTask(new GameSender($this), 20);
 
     }
     ############################################################################################################
@@ -217,7 +217,7 @@ class Bedwars extends PluginBase implements Listener {
     }
     public function getTeam($pn){
 
-        $pn = str_replace("§", "", $pn);
+        $pn = str_replace("�", "", $pn);
         $pn = str_replace(TextFormat::ESCAPE, "", $pn);
         $color = $pn{0};
         return $this->convertColorToTeam($color);
@@ -277,7 +277,7 @@ class Bedwars extends PluginBase implements Listener {
                     }
                 }
                 if($teamcount >= $teamcount2){
-                    //hinten anhÃ¤ngen
+                    //hinten anhängen
                     array_push($array, $team);
                 } else {
                     array_unshift($array, $team);
@@ -1007,7 +1007,7 @@ class Bedwars extends PluginBase implements Listener {
                 $event->setRespawnPosition(new Position($x, $y, $z, $level));
             } else {
                 $event->setRespawnPosition($this->getServer()->getDefaultLevel()->getSafeSpawn());
-                $player->sendMessage($this->prefix.TextFormat::RED."Dein Bett wurde zerstÃ¶rt, du kannst nicht mehr respawnen!");
+                $player->sendMessage($this->prefix.TextFormat::RED."Dein Bett wurde zerstört, du kannst nicht mehr respawnen!");
                 $this->removePlayerFromArena($arena, $name);
                 $this->lasthit[$player->getName()] = "no";
                 $player->setNameTag($player->getName());
@@ -1067,7 +1067,7 @@ class Bedwars extends PluginBase implements Listener {
                         foreach ($players as $pn) {
                             $p = $this->getServer()->getPlayerExact($pn);
                             if($p != null) {
-                                $p->sendMessage($this->prefix . $killer->getNameTag() . TextFormat::GRAY. " hat " . $player->getNameTag() . TextFormat::GRAY . " getÃ¶tet!");
+                                $p->sendMessage($this->prefix . $killer->getNameTag() . TextFormat::GRAY. " hat " . $player->getNameTag() . TextFormat::GRAY . " getötet!");
                             }
                         }
                     } else {
@@ -1087,7 +1087,7 @@ class Bedwars extends PluginBase implements Listener {
                             if($this->lasthit[$player->getName()] != "no"){
                                 $p2 = $this->getServer()->getPlayerExact($this->lasthit[$player->getName()]);
                                 if($p2 != null){
-                                    $p->sendMessage($this->prefix . $p2->getNameTag() . TextFormat::WHITE. " hat " . $player->getNameTag() . TextFormat::WHITE . " getÃ¶tet!");
+                                    $p->sendMessage($this->prefix . $p2->getNameTag() . TextFormat::WHITE. " hat " . $player->getNameTag() . TextFormat::WHITE . " getötet!");
                                     $this->lasthit[$player->getName()] = "no";
                                 } else {
                                     $p->sendMessage($this->prefix . $player->getNameTag() . TextFormat::GRAY . " ist gestorben!");
@@ -1232,21 +1232,21 @@ class Bedwars extends PluginBase implements Listener {
                         $config->save();
                         $event->setDrops(array());
 
-                        $player->sendMessage($this->prefix . "Du hast das Bett von Team " . $team . " zerstört!");
+                        $player->sendMessage($this->prefix . "Du hast das Bett von Team " . $team . " zerst�rt!");
 
                         foreach ($this->getPlayers($arena) as $pn) {
                             $p = $this->getServer()->getPlayerExact($pn);
                             if ($p != null) {
                                 if ($team == $this->getTeam($p->getNameTag())) {
-                                    $p->sendMessage($this->prefix . TextFormat::RED . "Das Bett von deinem Team wurde zerstört!");
+                                    $p->sendMessage($this->prefix . TextFormat::RED . "Das Bett von deinem Team wurde zerst�rt!");
                                 } else {
-                                    $p->sendMessage($this->prefix . "Das Bett von Team " . TextFormat::GOLD . $team . TextFormat::WHITE . " wurde zerstört!");
+                                    $p->sendMessage($this->prefix . "Das Bett von Team " . TextFormat::GOLD . $team . TextFormat::WHITE . " wurde zerst�rt!");
                                 }
 
                             }
                         }
                     } else {
-                        $player->sendMessage($this->prefix . "Du kannst dein eigenes Bett nicht zerstören!");
+                        $player->sendMessage($this->prefix . "Du kannst dein eigenes Bett nicht zerst�ren!");
                         $event->setCancelled();
                     }
                 }
@@ -1284,7 +1284,7 @@ class Bedwars extends PluginBase implements Listener {
 
             $config->save();
 
-            $player->sendMessage(TextFormat::GREEN . "Du hast Erfolgreich das Bett von Team " . TextFormat::AQUA . $team . TextFormat::GREEN . " fÃ¼r die Arena " . TextFormat::AQUA . $arena . TextFormat::GREEN . " registriert!");
+            $player->sendMessage(TextFormat::GREEN . "Du hast Erfolgreich das Bett von Team " . TextFormat::AQUA . $team . TextFormat::GREEN . " für die Arena " . TextFormat::AQUA . $arena . TextFormat::GREEN . " registriert!");
             $player->sendMessage(TextFormat::GREEN . "Setup -> /bw help");
         }
 
@@ -1307,7 +1307,7 @@ class Bedwars extends PluginBase implements Listener {
                 $tile->setText($this->prefix, $arena." ".$teams."x".$ppt, TextFormat::GREEN."Loading...", TextFormat::YELLOW."0 / ".$maxplayers);
                 $this->registerSign = false;
 
-                $player->sendMessage(TextFormat::GREEN . "Du hast Erfolgreich das Schild fÃ¼r die Arena " . TextFormat::AQUA . $arena . TextFormat::GREEN . " registriert!");
+                $player->sendMessage(TextFormat::GREEN . "Du hast Erfolgreich das Schild für die Arena " . TextFormat::AQUA . $arena . TextFormat::GREEN . " registriert!");
                 $player->sendMessage(TextFormat::GREEN . "Setup -> /bw help");
             }
             elseif($text[0] == $this->prefix){
@@ -1363,7 +1363,7 @@ class Bedwars extends PluginBase implements Listener {
                     $sender->sendMessage(TextFormat::GRAY."-> ".TextFormat::DARK_AQUA."/bw help ".TextFormat::GRAY."[".TextFormat::RED."Zeigt alle Bedwars Commands an".TextFormat::GRAY."]");
                     $sender->sendMessage(TextFormat::GRAY."-> ".TextFormat::DARK_AQUA."/bw regsign <Arena> ".TextFormat::GRAY."[".TextFormat::RED."Registriert ein Arenen Schild".TextFormat::GRAY."]");
                     $sender->sendMessage(TextFormat::GRAY."-> ".TextFormat::DARK_AQUA."/bw savemaps <Arena> ".TextFormat::GRAY."[".TextFormat::RED."Sichert alle Welten einer Arena".TextFormat::GRAY."]");
-                    $sender->sendMessage(TextFormat::GRAY."-> ".TextFormat::DARK_AQUA."/bw addarena <ArenaName> <Teams> <SpielerProTeam> ".TextFormat::GRAY."[".TextFormat::RED."FÃ¼gt eine neue Arena hinzu".TextFormat::GRAY."]");
+                    $sender->sendMessage(TextFormat::GRAY."-> ".TextFormat::DARK_AQUA."/bw addarena <ArenaName> <Teams> <SpielerProTeam> ".TextFormat::GRAY."[".TextFormat::RED."Fügt eine neue Arena hinzu".TextFormat::GRAY."]");
                     $sender->sendMessage(TextFormat::GRAY."-> ".TextFormat::DARK_AQUA."/bw setlobby <Arena>".TextFormat::GRAY."[".TextFormat::RED."setzt die Arena Lobby".TextFormat::GRAY."]");
                     $sender->sendMessage(TextFormat::GRAY."-> ".TextFormat::DARK_AQUA."/bw setspawn <Arena> <Team>".TextFormat::GRAY."[".TextFormat::RED."setzt die Team Spawns".TextFormat::GRAY."]");
                     $sender->sendMessage(TextFormat::GRAY."-> ".TextFormat::DARK_AQUA."/bw setbed <Arena> <Team>".TextFormat::GRAY."[".TextFormat::RED."setzt die Team Betten".TextFormat::GRAY."]");
@@ -1422,7 +1422,7 @@ class Bedwars extends PluginBase implements Listener {
 
                             $this->setLobby($arena, $sender);
 
-                            $sender->sendMessage(TextFormat::GREEN . "Du hast Erfolgreich die Lobby fÃ¼r die Arena " . TextFormat::AQUA . $arena . TextFormat::GREEN . " gesetzt!");
+                            $sender->sendMessage(TextFormat::GREEN . "Du hast Erfolgreich die Lobby für die Arena " . TextFormat::AQUA . $arena . TextFormat::GREEN . " gesetzt!");
                             $sender->sendMessage(TextFormat::GREEN . "Setup -> /bw help");
 
                         } else {
@@ -1443,7 +1443,7 @@ class Bedwars extends PluginBase implements Listener {
                                 $this->registerBedWHO = $name;
                                 $this->registerBedArena = $arena;
                                 $this->registerBedTeam = $team;
-                                $sender->sendMessage(TextFormat::GREEN . "Tippe nun ein Bett an! bitte Tippe die untere HÃ¤lfte an da es sonst zu bugs kommen kann!");
+                                $sender->sendMessage(TextFormat::GREEN . "Tippe nun ein Bett an! bitte Tippe die untere Hälfte an da es sonst zu bugs kommen kann!");
 
                                 $this->resetArena($arena);
                             } else {
@@ -1468,7 +1468,7 @@ class Bedwars extends PluginBase implements Listener {
 
                                 $this->setSpawn($arena, $team, $sender);
 
-                                $sender->sendMessage(TextFormat::GREEN . "Du hast Erfolgreich den Spawn des Teams ".TextFormat::AQUA . $team . TextFormat::GREEN." fÃ¼r die Arena " . TextFormat::AQUA . $arena . TextFormat::GREEN . " gesetzt!");
+                                $sender->sendMessage(TextFormat::GREEN . "Du hast Erfolgreich den Spawn des Teams ".TextFormat::AQUA . $team . TextFormat::GREEN." für die Arena " . TextFormat::AQUA . $arena . TextFormat::GREEN . " gesetzt!");
                                 $sender->sendMessage(TextFormat::GREEN . "Setup -> /bw help");
 
                                 $this->resetArena($arena);
@@ -1498,7 +1498,7 @@ return true;
     }
 }
 
-class BWRefreshSigns extends PluginTask {
+class RefreshSigns extends PluginTask {
 
     public $prefix = "";
       public $Signprefix ="";
@@ -1518,7 +1518,7 @@ class BWRefreshSigns extends PluginTask {
             if ($t instanceof Sign) {
                 $text = $t->getText();
                 if ($text[0] == $this->prefix) {
-                        count($this->plugin->getServer()->getLevelByName($text[1])->getPlayers());
+                        aop = count($this->plugin->getServer()->getLevelByName($text[1])->getPlayers());
                     			$ingame = TextFormat::GREEN . "Beitreten";
                     			$config = new Config($this->plugin->getDataFolder() . "config.yml", Config::YAML);
                     			if ($config->get($text[1] . "Status") != "Lobby") {
@@ -1537,7 +1537,7 @@ class BWRefreshSigns extends PluginTask {
     	}
 }
 
-class BWGameSender extends PluginTask {
+class GameSender extends PluginTask {
 
     public $prefix = "Bedwars";
 
@@ -1749,7 +1749,7 @@ class BWGameSender extends PluginTask {
                             foreach($players as $pn){
                                 $p = $this->plugin->getServer()->getPlayerExact($pn);
                                 if($p != null){
-                                    $p->sendMessage($this->plugin->prefix.$gametimer/60 . " Minuten Ã¼brig");
+                                    $p->sendMessage($this->plugin->prefix.$gametimer/60 . " Minuten übrig");
                                 } else {
                                     $this->plugin->removePlayerFromArena($arena, $pn);
                                 }
@@ -1759,7 +1759,7 @@ class BWGameSender extends PluginTask {
                             foreach($players as $pn){
                                 $p = $this->plugin->getServer()->getPlayerExact($pn);
                                 if($p != null){
-                                    $p->sendMessage($this->plugin->prefix.$gametimer . " sekunden Ã¼brig");
+                                    $p->sendMessage($this->plugin->prefix.$gametimer . " sekunden übrig");
                                 } else {
                                     $this->plugin->removePlayerFromArena($arena, $pn);
                                 }
@@ -1769,7 +1769,7 @@ class BWGameSender extends PluginTask {
                             foreach($players as $pn){
                                 $p = $this->plugin->getServer()->getPlayerExact($pn);
                                 if($p != null){
-                                    $p->sendMessage($this->plugin->prefix."1 sekunde Ã¼brig");
+                                    $p->sendMessage($this->plugin->prefix."1 sekunde übrig");
                                 } else {
                                     $this->plugin->removePlayerFromArena($arena, $pn);
                                 }
