@@ -47,7 +47,7 @@ use pocketmine\tile\Tile;
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat;
 
-class BedWars extends PluginBase implements Listener {
+class BedWars extends PluginBase implements Listener{
 
     public $prefix = TextFormat::GRAY."[".TextFormat::DARK_AQUA."Bedwars".TextFormat::GRAY."]".TextFormat::WHITE." ";
     public $registerSign = false;
@@ -1498,7 +1498,7 @@ return true;
     }
 }
 
-class RefreshSigns extends PluginTask {
+class RefreshSigns extends PluginTask{
 
     public $prefix = "";
       public $Signprefix ="";
@@ -1537,7 +1537,7 @@ class RefreshSigns extends PluginTask {
     	}
 }
 
-class GameSender extends PluginTask {
+class GameSender extends PluginTask{
 
     public $prefix = "Bedwars";
 
