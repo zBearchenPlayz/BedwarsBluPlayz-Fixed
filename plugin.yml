@@ -1,0 +1,11 @@
+name: Bedwars
+version: 4.1.0
+api: [3.0.0-ALPHA12]
+main: Bluplayz\BedWars
+author: BluPlayz [Fixed by zBearchenPlayz]
+commands:
+    Bedwars:
+        description: Bedwars Main Command
+        aliases: [bw]
+    Start:
+        description: Bedwars Forcestart Command
