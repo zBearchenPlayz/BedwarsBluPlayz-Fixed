@@ -1,6 +1,6 @@
 <?php
 
-namespace Bluplayz;
+namespace BedWars;
 
 use pocketmine\block\Block;
 use pocketmine\Command\Command;
